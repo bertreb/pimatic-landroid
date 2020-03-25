@@ -66,11 +66,11 @@ The format for one day is:
 ```
 <day-of-week>, <time-string>, <duration>, <edgeCut>; .....
 
-Valid values:
-<day-of-week>: [sunday|monday|tuesday|wednesday|thursday|friday|saturday]
-<time-string>: 00:00 - 23:59
-<duration>: 0 - 1439 (minutes)
-<edgeCut>: 0 or 1
+valid values:
+  <day-of-week>: [sunday|monday|tuesday|wednesday|thursday|friday|saturday]
+  <time-string>: 00:00 - 23:59
+  <duration>: 0 - 1439 (minutes)
+  <edgeCut>: 0 or 1
 ```
 for example if you want to set the mower for tuesday and friday at 10:00 for 1 hour with edgeCutting,
 the command is:
