@@ -1,0 +1,44 @@
+{
+  "name": "pimatic-landroid",
+  "description": "Pimatic plugin for Worx Landroid mower",
+  "author": {
+    "name": "Bert Gierveld",
+    "email": "gitbertreb@gmail.com",
+    "url": "https://github.com/bertreb"
+  },
+  "main": "pimatic-landroid",
+  "files": [
+    "pimatic-landroid.coffee",
+    "pimatic-landroid-config-schema.coffee",
+    "device-config-schema.coffee",
+    "README.md",
+    "LICENSE",
+    "HISTORY.md"
+  ],
+  "homepage": "https://github.com/bertreb/pimatic-landroid.git",
+  "keywords": [
+    "pimatic",
+    "worx",
+    "landroid",
+    "mower"
+  ],
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bertreb/pimatic-landroid.git"
+  },
+  "configSchema": "pimatic-landroid-config-schema.coffee",
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "mqtt": "^3.0.0",
+    "request-promise": "^4.2.5",
+    "uuid": "^7.0.2"
+  },
+  "peerDependencies": {
+    "pimatic": "0.9.*"
+  },
+  "engines": {
+    "node": ">=8",
+    "npm": ">=2"
+  }
+}
