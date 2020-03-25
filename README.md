@@ -68,6 +68,7 @@ The format for one day is:
 
 Valid values:
 <day-of-week>: [sunday|monday|tuesday|wednesday|thursday|friday|saturday].
+<time-string>: 00:00 - 23:59
 <duration>: 0 - 1439 (minutes)
 <edgeCut>: 0 or 1
 ```
