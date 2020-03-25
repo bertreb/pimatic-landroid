@@ -61,13 +61,13 @@ mower <mower-id>
 
 The schedule can be set for a week starting at sunday till saturday. This schedule is repeated every week.
 In the $schedule-variable contains a string with one or more days, separated by a semi-colon (;)
-The format for a day is
+The format for one day is:
 
 ```
 <day-of-week>, <time-string>, <duration>, <edgeCut>; .....
 ```
 Valid values:
-\<day-of-week> are [sunday|monday|tuesday|wednesday|thursday|friday|saturday].
+\<day-of-week>: [sunday|monday|tuesday|wednesday|thursday|friday|saturday].
 \<duration>: 0 - 1439 (minutes)
 \<edgeCut>: 0 or 1
 for example if you want to set the mower for tuesday and friday at 10:00 for 1 hour with edgeCutting,
