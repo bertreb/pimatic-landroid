@@ -50,7 +50,8 @@ battery: "Battery level (0-100%)"
 batteryTemperature: "Battery temperature of mower"
 wifi: "Wifi strenght at the mower (dBm)"
 ```
-The action syntax:
+The mower can be controller and configured via rules.
+The action syntax is:
 ```
   mower <mower-id>
     [start|pause|stop]
@@ -81,5 +82,6 @@ or directly with a string in the action part of a rule
 mower <mower-id> schedule "tuesday, 10:00, 60, 1; friday, 10:00, 60, 1"
 ```
 ---
+The plugin is partly based on ioBroker.worx and homebridge-landroid
 
 You could backup Pimatic before you are using this plugin!
