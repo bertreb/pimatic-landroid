@@ -87,3 +87,5 @@ mower <mower-id> schedule "tuesday, 10:00, 60, 1; friday, 10:00, 60, 1"
 The plugin is partly based on ioBroker.worx and homebridge-landroid
 
 You could backup Pimatic before you are using this plugin!
+
+__The minimum requirement for this plugin is node v8!__
