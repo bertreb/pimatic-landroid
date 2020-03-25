@@ -12,9 +12,9 @@ When these steps are done you can config the pimatic-landoid plugin.
 ## Config of the plugin
 ```
 {
-  email:        "The email address for your Landroid account"
-  password:     "The password of your Landroid account"
-  debug:        "Debug mode. Writes debug messages to the Pimatic log, if set to true."
+  email:    "The email address for your Landroid account"
+  password: "The password of your Landroid account"
+  debug:    "Debug mode. Writes debug messages to the Pimatic log, if set to true."
 }
 ```
 
@@ -26,10 +26,10 @@ The following dat is automatically generated on device discovery and should not 
 
 ```
 {
-  serial: "The serialnumber of the mower"
-  mac: "The mac address of the mower"
+  serial:      "The serialnumber of the mower"
+  mac:         "The mac address of the mower"
   landroid_id: "The Landroid ID number of the mower"
-  command_in: "The mqtt command-in string"
+  command_in:  "The mqtt command-in string"
   command_out: "The mqtt command-out string"
 }
 ```
@@ -37,18 +37,18 @@ The following dat is automatically generated on device discovery and should not 
 The following variables (attributes) are available in the gui / pimatic.
 
 ```
-cloud: "If plugin is connected or disconnected to the Worx-landroid cloud"
-status: "Actual status of the mower"
-mower: "If mower is offline or online"
-language: "The used/configured language"
-rainDelay: "The delay after rain, before mowing (minutes)"
+cloud:      "If plugin is connected or disconnected to the Worx-landroid cloud"
+status:     "Actual status of the mower"
+mower:      "If mower is offline or online"
+language:   "The used/configured language"
+rainDelay:  "The delay after rain, before mowing (minutes)"
 batteryCharging: "If true battery is charging"
-totalTime: "The totalTime the mower has mowed (minutes)"
+totalTime:  "The totalTime the mower has mowed (minutes)"
 totalDistance: "The totalDistance the mower has mowed (meters)"
 totalBladeTime: "The totalBladeTime the mower has mowed (minutes)"
-battery: "Battery level (0-100%)"
+battery:    "Battery level (0-100%)"
 batteryTemperature: "Battery temperature of mower"
-wifi: "Wifi strenght at the mower (dBm)"
+wifi:       "Wifi strenght at the mower (dBm)"
 ```
 The mower can be controller and configured via rules.
 The action syntax is:
