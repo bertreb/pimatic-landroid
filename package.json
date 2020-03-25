@@ -11,6 +11,8 @@
     "pimatic-landroid.coffee",
     "pimatic-landroid-config-schema.coffee",
     "device-config-schema.coffee",
+    "api.js",
+    "LandroidDataset.js",
     "README.md",
     "LICENSE",
     "HISTORY.md"
@@ -22,7 +24,7 @@
     "landroid",
     "mower"
   ],
-  "version": "0.0.1",
+  "version": "0.1.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bertreb/pimatic-landroid.git"
