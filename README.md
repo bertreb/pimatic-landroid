@@ -64,7 +64,7 @@ In the $schedule-variable contains a string with one or more days, separated by 
 The format for one day is:
 
 ```
-<day-of-week>, <time-string>, <duration>, <edgeCut>; .....
+<day-of-week>, <time-string>, <duration>, <edgeCut>
 
 valid values:
   <day-of-week>: [sunday|monday|tuesday|wednesday|thursday|friday|saturday]
