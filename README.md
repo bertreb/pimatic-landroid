@@ -26,29 +26,29 @@ The following dat is automatically generated on device discovery and should not 
 
 ```
 {
-  serial:      "The serialnumber of the mower"
-  mac:         "The mac address of the mower"
-  landroid_id: "The Landroid ID number of the mower"
-  command_in:  "The mqtt command-in string"
-  command_out: "The mqtt command-out string"
+  serial:       "Serialnumber of the mower"
+  mac:          "Mac address of the mower"
+  landroid_id:  "Landroid ID number of the mower"
+  command_in:   "Mqtt command-in string"
+  command_out:  "Mqtt command-out string"
 }
 ```
 
 The following variables (attributes) are available in the gui / pimatic.
 
 ```
-cloud:      "If plugin is connected or disconnected to the Worx-landroid cloud"
-status:     "Actual status of the mower"
-mower:      "If mower is offline or online"
-language:   "The used/configured language"
-rainDelay:  "The delay after rain, before mowing (minutes)"
-batteryCharging: "If true battery is charging"
-totalTime:  "The totalTime the mower has mowed (minutes)"
-totalDistance: "The totalDistance the mower has mowed (meters)"
-totalBladeTime: "The totalBladeTime the mower has mowed (minutes)"
-battery:    "Battery level (0-100%)"
+cloud:              "If plugin is connected or disconnected to the Worx-landroid cloud"
+status:             "Actual status of the mower (idle, mowing, etc)"
+mower:              "Mower offline or online"
+language:           "Used/configured language"
+rainDelay:          "Delay after rain, before mowing (minutes)"
+batteryCharging:    "If true battery is charging"
+totalTime:          "TotalTime the mower has mowed (minutes)"
+totalDistance:      "TotalDistance the mower has mowed (meters)"
+totalBladeTime:     "TotalBladeTime the mower has mowed (minutes)"
+battery:            "Battery level (0-100%)"
 batteryTemperature: "Battery temperature of mower"
-wifi:       "Wifi strenght at the mower (dBm)"
+wifi:               "Wifi strenght at the mower (dBm)"
 ```
 The mower can be controller and configured via rules.
 The action syntax is:
@@ -67,10 +67,10 @@ The format for one day is:
 <day-of-week>, <time-string>, <duration>, <edgeCut>
 
 valid values:
-  <day-of-week>: [sunday|monday|tuesday|wednesday|thursday|friday|saturday]
-  <time-string>: 00:00 - 23:59
-  <duration>: 0 - 1439 (minutes)
-  <edgeCut>: 0 or 1
+  <day-of-week>:   [sunday|monday|tuesday|wednesday|thursday|friday|saturday]
+  <time-string>:  00:00 - 23:59
+  <duration>:     0 - 1439 (minutes)
+  <edgeCut>:      0 or 1
 ```
 for example if you want to set the mower for tuesday and friday at 10:00 for 1 hour with edgeCutting,
 the command is:
