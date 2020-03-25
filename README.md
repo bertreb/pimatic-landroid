@@ -4,7 +4,7 @@ Pimatic plugin for Worx Landroid mower
 This plugin lets you control and get status info from a Landroid mower. Supported mowers are mowers that can be controlled via the Landroid app and are wifi connected to the Worx cloud.
 This plugin is tested with a Landroid M500 and should work will all cloud connected Landroid mowers.
 
-After downloading the Landoid app, you can registeren in the app with your email and password. 
+After downloading the Landoid app, you can registeren in the app with your email and password.
 After registration you can add your mower in the app, configure the wifi and some settings.
 
 When these steps are done you can config the pimatic-landoid plugin.
@@ -53,10 +53,10 @@ wifi: "Wifi strenght at the mower (dBm)"
 The mower can be controller and configured via rules.
 The action syntax is:
 ```
-  mower <mower-id>
-    [start|pause|stop]
-    [raindelay] <raindelay-number>
-    [schedule] $schedule-variable | "schedule string"
+mower <mower-id>
+  [start|pause|stop]
+  [raindelay] <raindelay-number>
+  [schedule] $schedule-variable | "schedule string"
 ```
 
 The schedule can be set for a week starting at sunday till saturday. This schedule is repeated every week.
@@ -69,7 +69,7 @@ The format for a day is
 Valid values:
 \<day-of-week> are [sunday|monday|tuesday|wednesday|thursday|friday|saturday].
 \<duration>: 0 - 1439 (minutes)
-\<edgeCut>: 0 or 1 
+\<edgeCut>: 0 or 1
 for example if you want to set the mower for tuesday and friday at 10:00 for 1 hour with edgeCutting,
 the command is:
 ```
