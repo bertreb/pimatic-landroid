@@ -4,8 +4,8 @@ Pimatic plugin for Worx Landroid mower
 This plugin lets you control and get status info from a Landroid mower. Supported mowers are mowers that can be controlled via the Landroid app and are wifi connected to the Worx cloud.
 This plugin is tested with a Landroid M500 and should work will all cloud connected Landroid mowers.
 
-After downloading the Landoid app, you can registeren in the app with your email and password.
-After registration you can add your mower in the app, configure the wifi and some settings.
+After downloading the Landoid app, you can register in the app with your email and password.
+After registration you can add your mower in the app, configure the wifi and other settings.
 
 When these steps are done you can config the pimatic-landoid plugin.
 
