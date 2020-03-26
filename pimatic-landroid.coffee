@@ -257,7 +257,7 @@ module.exports = (env) ->
             if Number _edgeCut < 0 or Number _edgeCut > 1
               result.reason = "Schedule, invalid edgeCut value '#{dayParameters[3]}' for '#{dayOfWeek}'"
               return result
-            result.schedule[_day] = [_time, (Number _duration), (Number _edgeCut)]
+            result.schedule[_day] = [time, (Number _duration), (Number _edgeCut)]
           result.error = false
           return result
       catch err
@@ -438,7 +438,7 @@ module.exports = (env) ->
             _scheduleString = _params.schedulestring
           else
             return __("\"%s\" schedule string is missing") + err            
-          if _schedule?
+          if _scheduleString?
             schedule = @mowerDevice.checkAndCompleteSchedule(_scheduleString)
             if not schedule.error
               _params.schedule = schedule.schedule
