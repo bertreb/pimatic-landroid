@@ -214,7 +214,7 @@ module.exports = (env) ->
           @setAttr("status",landroidDataset.statusDescription)
 
         if landroidDataset.rainDelay?
-          @setAttr("rainDelay",Number landroidDataset.rainDelay)
+          @setAttr("rainDelay",landroidDataset.rainDelay)
         ###
         if landroidDataset.language?
           @setAttr("language",landroidDataset.language)
@@ -323,9 +323,20 @@ module.exports = (env) ->
 
     setAttr: (attr, _status) =>
       #unless @attributeValues[attr] is _status
-      @attributeValues[attr] = _status
+      switch @attributes[attr].type
+        when "string"
+          @attributeValues[attr] = _status
+          env.logger.debug "Set attribute '#{attr}' to '#{_status}'"
+        when "number"
+          @attributeValues[attr] = Number _status
+          env.logger.debug "Set attribute '#{attr}' to #{_status}"
+        when "boolean"
+          @attributeValues[attr] = Boolean _status
+          env.logger.debug "Set attribute '#{attr}' to #{_status}"
+        else
+          @attributeValues[attr] = _status
+          env.logger.debug "Set attribute '#{attr}' to '#{_status}'"
       @emit attr, @attributeValues[attr]
-      env.logger.debug "Set attribute '#{attr}' to '#{_status}'"
 
 
     setSchedule: (schedule) =>
