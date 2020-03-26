@@ -6,6 +6,7 @@ module.exports = (env) ->
   path = require('path')
   _ = require('lodash')
   M = env.matcher
+  Moment = require('moment')
   LandroidCloud = require('./api.js')
   LandroidDataset = require('./LandroidDataset.js')
 
@@ -99,10 +100,12 @@ module.exports = (env) ->
           description: "Showing if mower is off or online"
           type: "string"
           acronym: "mower"
+        ###
         language:
           description: "The used language"
           type: "string"
           acronym: "language"
+        ###
         rainDelay:
           description: "The delay after rain, before mowing"
           type: "number"
@@ -153,6 +156,10 @@ module.exports = (env) ->
           type: "number"
           unit: "dBm"
           acronym: "wifi"
+        nextMowe:
+          description: "Next scheduled mowing"
+          type: "string"
+          acronym: "nextMowe"
 
       @attributeValues = {}
       for i, _attr of @attributes
@@ -207,8 +214,10 @@ module.exports = (env) ->
           @setAttr("status",landroidDataset.statusDescription)
         if landroidDataset.rainDelay?
           @setAttr("rainDelay",Number landroidDataset.rainDelay)
+        ###
         if landroidDataset.language?
           @setAttr("language",landroidDataset.language)
+        ###
         if landroidDataset.batteryLevel?
           @setAttr("battery",landroidDataset.batteryLevel)
         if landroidDataset.batteryTemperature?
@@ -225,6 +234,7 @@ module.exports = (env) ->
           @setAttr("totalBladeTime",landroidDataset.totalBladeTime)
         if landroidDataset.schedule?
           @schedule = landroidDataset.schedule
+          @setSchedule(landroidDataset.schedule)
           env.logger.debug "mqtt schedule received"
 
 
@@ -293,6 +303,7 @@ module.exports = (env) ->
                   d: params.schedule
               outMsg = JSON.stringify(om)
               @plugin.landroidCloud.sendMessage(outMsg, @serial)
+              @setSchedule(params.schedule)
               resolve()
             else
               reject()
@@ -315,6 +326,24 @@ module.exports = (env) ->
       @emit attr, @attributeValues[attr]
       env.logger.debug "Set attribute '#{attr}' to '#{_status}'"
 
+
+    setSchedule: (schedule) =>
+      env.logger.info "Schedule: " + JSON.stringify(schedule,null,2)
+      _nextMowe = "not scheduled"
+      checkDate = Moment().day()
+      env.logger.info "checkDate: " + checkDate
+      for i in [0..7]
+        if checkDate >6 then checkDate = 0
+        env.logger.info "schedule[#{checkDate}] " + JSON.stringify(schedule[checkDate],null,2)
+        if schedule[checkDate][1] > 0
+          if Moment(schedule[checkDate][0]).isAfter(Moment(new Date())) or i > 0
+            env.logger.info "NextMowe to be set to " + Moment().add(i, 'days').format('LLLL')
+            _nextMowe = (Moment().add(i, 'days').format('dddd')).toLowerCase() + " " + schedule[checkDate][0]
+            if Boolean schedule[checkDate][2]
+              _nextMowe = _nextMowe + " " + "with edgeCut"
+            @setAttr('nextMowe', _nextMowe)
+            return
+        checkDate +=1
 
     destroy: ->
       super()
