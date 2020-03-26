@@ -8,5 +8,5 @@
 	* update package.json
 * 20200326, v0.1.4
 	* fix schedule string
-* 20200326, v0.1.7
+* 20200326, v0.1.8
 	* added next scheduled mowing

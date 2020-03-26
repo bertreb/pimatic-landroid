@@ -187,7 +187,7 @@ module.exports = (env) ->
         @processMowerMessage(mower, data)
 
       @plugin.landroidCloud.on "online",  (msg)=>
-        env.logger.debug "online message received processing"
+        env.logger.debug "online message received processing " + JSON.stringify(msg,null,2)
         @processMowerMessage(null,msg)
       @plugin.landroidCloud.on "offline",  (msg)=>
         env.logger.debug "offline message received processing"
@@ -212,6 +212,7 @@ module.exports = (env) ->
         landroidDataset = new LandroidDataset(data)
         if landroidDataset.statusDescription?
           @setAttr("status",landroidDataset.statusDescription)
+
         if landroidDataset.rainDelay?
           @setAttr("rainDelay",Number landroidDataset.rainDelay)
         ###
@@ -328,12 +329,21 @@ module.exports = (env) ->
 
 
     setSchedule: (schedule) =>
+      #env.logger.info "Schedule: " + JSON.stringify(schedule,null,2)
       _nextMowe = "not scheduled"
       checkDate = Moment().day()
       for i in [0..7]
         if checkDate >6 then checkDate = 0
         if schedule[checkDate][1] > 0
-          if Moment(schedule[checkDate][0]).isAfter(Moment(new Date())) or i > 0
+          if i is 0 # is today
+            time = (String schedule[checkDate][0]).split(":")
+            if (Number time[0]) > Moment().hour() and (Number time[1]) > Moment().minute()
+              _nextMowe = (Moment().add(i, 'days').format('dddd')).toLowerCase() + " " + schedule[checkDate][0]
+              if Boolean schedule[checkDate][2]
+                _nextMowe = _nextMowe + " " + "with edgeCut"
+              @setAttr('nextMowe', _nextMowe)
+              return
+          else
             _nextMowe = (Moment().add(i, 'days').format('dddd')).toLowerCase() + " " + schedule[checkDate][0]
             if Boolean schedule[checkDate][2]
               _nextMowe = _nextMowe + " " + "with edgeCut"
