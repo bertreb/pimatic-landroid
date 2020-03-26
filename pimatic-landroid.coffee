@@ -328,16 +328,12 @@ module.exports = (env) ->
 
 
     setSchedule: (schedule) =>
-      env.logger.info "Schedule: " + JSON.stringify(schedule,null,2)
       _nextMowe = "not scheduled"
       checkDate = Moment().day()
-      env.logger.info "checkDate: " + checkDate
       for i in [0..7]
         if checkDate >6 then checkDate = 0
-        env.logger.info "schedule[#{checkDate}] " + JSON.stringify(schedule[checkDate],null,2)
         if schedule[checkDate][1] > 0
           if Moment(schedule[checkDate][0]).isAfter(Moment(new Date())) or i > 0
-            env.logger.info "NextMowe to be set to " + Moment().add(i, 'days').format('LLLL')
             _nextMowe = (Moment().add(i, 'days').format('dddd')).toLowerCase() + " " + schedule[checkDate][0]
             if Boolean schedule[checkDate][2]
               _nextMowe = _nextMowe + " " + "with edgeCut"
