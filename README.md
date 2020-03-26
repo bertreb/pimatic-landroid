@@ -60,7 +60,7 @@ mower <mower-id>
 ```
 
 The schedule can be set for a week starting at sunday till saturday. This schedule is repeated every week.
-In the $schedule-variable contains a string with one or more days, separated by a semi-colon (;)
+The $schedule-variable contains a string with one or more days, separated by a semi-colon (;)
 The format for one day is:
 
 ```
