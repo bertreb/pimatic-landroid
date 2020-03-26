@@ -4,3 +4,5 @@
 	* initial release
 * 20200326, v0.1.2
 	* added rule action string check
+* 20200326, v0.1.3
+	* update package.json
