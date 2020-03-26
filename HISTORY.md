@@ -10,5 +10,5 @@
 	* fix schedule string
 * 20200326, v0.1.8
 	* added next scheduled mowing
-* 20200326, v0.1.10
+* 20200326, v0.1.11
 	* added display type attributes

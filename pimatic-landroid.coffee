@@ -64,6 +64,8 @@ module.exports = (env) ->
 
   class LandroidMower extends env.devices.Device
 
+
+
     constructor: (@config, lastState, @framework, @plugin) ->
       @id = @config.id
       @name = @config.name
@@ -72,7 +74,7 @@ module.exports = (env) ->
       @schedule = []
       @emptySchedule = []
 
-      for i in [1..7]
+      for x in [1..7]
         @emptySchedule.push ["9:00",0,0] 
       @daysOfWeek =
         sunday: 0
@@ -87,7 +89,8 @@ module.exports = (env) ->
       #
       # Configure attributes
       #
-      @attributes =
+
+      @attributes = {
         cloud:
           description: "If plugin is connected to the Worx-landroid cloud"
           type: "string"
@@ -100,21 +103,11 @@ module.exports = (env) ->
           description: "Showing if mower is off or online"
           type: "string"
           acronym: "mower"
-        ###
-        language:
-          description: "The used language"
-          type: "string"
-          acronym: "language"
-        ###
         rainDelay:
           description: "The delay after rain, before mowing"
           type: "number"
           acronym: "rainDelay"
           unit: "min"
-        batteryCharging:
-          description: "If true battery is charging"
-          type: "boolean"
-          acronym: "batteryCharging"
         totalTime:
           description: "The totalTime the mower has mowed"
           type: "number"
@@ -146,6 +139,10 @@ module.exports = (env) ->
               'icon-battery-fuel-5': [80, 100]
               'icon-battery-filled': 100
             }
+        batteryCharging:
+          description: "If true battery is charging"
+          type: "boolean"
+          acronym: "batteryCharging"
         batteryTemperature:
           description: "Battery temperature of mower"
           type: "number"
@@ -159,25 +156,28 @@ module.exports = (env) ->
         nextMowe:
           description: "Next scheduled mowing"
           type: "string"
-          acronym: "nextMowe"
+      }
+
 
       @attributeValues = {}
-      for i, _attr of @attributes
-        #env.logger.info "i " + i + ", type: " + _attr.type
-        do(_attr)=>
-          switch _attr.type
-            when "string"
-              @attributeValues[i] = ""
-            when "number"
-              @attributeValues[i] = 0
-            when "boolean"
-              @attributeValues[i] = false
-            else
-              @attributeValues[i] = ""
-          @_createGetter(i, =>
-            return Promise.resolve @attributeValues[i]
-          )
-          @setAttr i, @attributeValues[i]
+      @attributeValues.cloud = lastState?.cloud?.value or "disconnected"
+      @attributeValues.status = lastState?.status?.value or "idle"
+      @attributeValues.mower = lastState?.mower?.value or "offline"
+      @attributeValues.rainDelay = lastState?.rainDelay?.value or 0
+      @attributeValues.totalTime = lastState?.totalTime?.value or 0
+      @attributeValues.totalDistance = lastState?.totalDistance?.value or 0
+      @attributeValues.totalBladeTime = lastState?.totalBladeTime?.value or 0
+      @attributeValues.battery = lastState?.battery?.value or 0
+      @attributeValues.batteryCharging = lastState?.batteryCharging?.value or false
+      @attributeValues.batteryTemperature = lastState?.batteryTemperature?.value or 0.0
+      @attributeValues.wifi = lastState?.wifi?.value or 0
+      @attributeValues.nextMowe = lastState?.nextMowe?.value or ""
+
+      for key,attribute of @attributes
+        do (key) =>
+          @_createGetter key, () =>
+            return Promise.resolve @attributeValues[key]
+          @setAttr(key, @attributeValues[key])
 
       @framework.on "after init", =>
         @setAttr("cloud","disconnected")
@@ -323,23 +323,8 @@ module.exports = (env) ->
 
     setAttr: (attr, _status) =>
       #unless @attributeValues[attr] is _status
-      switch @attributes[attr].type
-        when "string"
-          @attributeValues[attr] = _status
-          @emit attr, @attributeValues[attr]
-          env.logger.debug "Set attribute '#{attr}' to '#{_status}'"
-        when "number"
-          @attributeValues[attr] = (Number _status)
-          @emit attr, Number @attributeValues[attr]
-          env.logger.debug "Set attribute '#{attr}' to #{_status}"
-        when "boolean"
-          @attributeValues[attr] = (Boolean _status)
-          @emit attr, Boolean @attributeValues[attr]
-          env.logger.debug "Set attribute '#{attr}' to #{_status}"
-        else
-          @attributeValues[attr] = _status
-          env.logger.debug "Set attribute '#{attr}' to '#{_status}'"
-          @emit attr, @attributeValues[attr]
+      @attributeValues[attr] = _status
+      @emit attr, @attributeValues[attr]
 
 
     setSchedule: (schedule) =>
@@ -368,6 +353,7 @@ module.exports = (env) ->
 
 
     destroy: ->
+      
       super()
 
 
