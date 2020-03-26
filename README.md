@@ -22,7 +22,7 @@ When these steps are done you can configure the pimatic-landoid plugin.
 
 Mowers are added via the discovery function. Per mower a LandroidMower is discovered unless the device is already in the config.
 The automatic generated Id must not change. Its the unique reference to your mower. You can change the Pimatic device name after you have saved the device. This is the only device variable you may change!
-The following dat is automatically generated on device discovery and should not be changed!
+The following data is automatically generated on device discovery and should not be changed!
 
 ```
 {
