@@ -7,7 +7,7 @@ This plugin is tested with a Landroid M500 and should work will all cloud connec
 After downloading the Landoid app, you can register in the app with your email and password.
 After registration you can add your mower in the app, configure the wifi and other settings.
 
-When these steps are done you can config the pimatic-landoid plugin.
+When these steps are done you can configure the pimatic-landoid plugin.
 
 ## Config of the plugin
 ```
