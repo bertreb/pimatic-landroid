@@ -340,6 +340,8 @@ module.exports = (env) ->
             @setAttr('nextMowe', _nextMowe)
             return
         checkDate +=1
+      @setAttr('nextMowe', _nextMowe)
+
 
     destroy: ->
       super()
