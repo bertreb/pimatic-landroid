@@ -229,41 +229,40 @@ module.exports = (env) ->
 
 
     checkAndCompleteSchedule: (scheduleIn) =>
-      return new Promise((resolve, reject) =>
-        try
-          tempSchedule = @emptySchedule
-          days = scheduleIn.split(";")
-          if days?
-            for day,i in days
-              dayParameters = day.split(",")
-              dayOfWeek = (dayParameters[0].trimLeft()).trimEnd()
-              _day = @daysOfWeek[dayOfWeek]
-              unless _day?
-                env.logger.debug "Schedule, unknown day '#{dayOfweek}'"
-                reject()
-              _time = dayParameters[1]
-              _time = (_time.trimLeft()).trimEnd()
-              _time2 = _time.split(":")
-              if _time2?
-                if Number _time2[0] <0 or Number _time2[0] > 23 or Number _time2[1] < 0 or Number _time2[1] > 59
-                  env.logger.debug "Schedule, invalid time format '#{dayParameters[1]}' for day #{i}"
-                  reject()
-              _duration = dayParameters[2]
-              _duration = (_duration.trimLeft()).trimEnd()
-              if Number _duration < 0 or Number _duration > 1439
-                env.logger.debug "Schedule, invalid duration value '#{dayParameters[2]}' for day #{i}"
-                reject()
-              _edgeCut = dayParameters[3]
-              _edgeCut = (_edgeCut.trimLeft()).trimEnd()
-              if Number _edgeCut < 0 or Number _edgeCut > 1
-                env.logger.debug "Schedule, invalid edgeCut value '#{dayParameters[3]}' for day #{i}"
-                reject()
-              tempSchedule[_day] = [_time, (Number _duration), (Number _edgeCut)]
-            resolve(tempSchedule)
-        catch err
-          env.logger.debug "Error in checkAndComplete schedule " + err
-          reject()
-      )
+      try
+        result =
+          schedule: @emptySchedule
+          error: true
+          reason: "no reason"
+        days = scheduleIn.split(";")
+        if days?
+          for day,i in days
+            dayParameters = day.split(",")
+            dayOfWeek = dayParameters[0].trim()
+            _day = @daysOfWeek[dayOfWeek]
+            unless _day?
+              result.reason = "Schedule, invalid day #{dayOfweek}"
+              return result
+            time = dayParameters[1].trim()
+            _time = time.split(":")
+            if _time?
+              if Number _time[0] <0 or Number _time[0] > 23 or Number _time[1] < 0 or Number _time[1] > 59
+                result.reason = "Schedule, invalid time format '#{time}' for '#{dayOfWeek}'"
+                return result
+            _duration = dayParameters[2].trim()
+            if Number _duration < 0 or Number _duration > 1439
+              result.reason = "Schedule, invalid duration value '#{dayParameters[2]}' for '#{dayOfWeek}'"
+              return result
+            _edgeCut = dayParameters[3].trim()
+            if Number _edgeCut < 0 or Number _edgeCut > 1
+              result.reason = "Schedule, invalid edgeCut value '#{dayParameters[3]}' for '#{dayOfWeek}'"
+              return result
+            result.schedule[_day] = [_time, (Number _duration), (Number _edgeCut)]
+          result.error = false
+          return result
+      catch err
+        result.reason = "Error in checkAndComplete schedule " + err
+        return result
 
     execute: (command, params) =>
       return new Promise((resolve, reject) =>
@@ -360,7 +359,9 @@ module.exports = (env) ->
         @params["schedulestring"] = tokens
         setCommand("schedule")
         match = m.getFullMatch()
-        return
+        _result = @mowerDevice.checkAndCompleteSchedule(tokens)
+        if _result.error
+          context?.addError(_result.reason)
 
       m = M(input, context)
         .match('mower ')
@@ -432,15 +433,15 @@ module.exports = (env) ->
         if @command is "schedule"
           if _params.schedulevar?
             _var = (_params.schedulevar).slice(1) if (_params.schedulevar).indexOf('$') >= 0
-            _schedule = @framework.variableManager.getVariableValue(_var)
+            _scheduleString = @framework.variableManager.getVariableValue(_var)
           else if _params.schedulestring?
-            _schedule = _params.schedulestring
+            _scheduleString = _params.schedulestring
           else
             return __("\"%s\" schedule string is missing") + err            
           if _schedule?
-            @mowerDevice.checkAndCompleteSchedule(_schedule)
-            .then((schedule) =>
-              _params.schedule = schedule
+            schedule = @mowerDevice.checkAndCompleteSchedule(_scheduleString)
+            if not schedule.error
+              _params.schedule = schedule.schedule
               @mowerDevice.execute(@command, _params)
               .then(()=>
                 return __("\"%s\" Executed mower command ", @command)
@@ -448,9 +449,8 @@ module.exports = (env) ->
                 env.logger.debug "Error in mower execute " + err
                 return __("\"%s\" Rule not executed mower offline") + err
               )
-            ).catch((err)=>
-              return __("\"%s\" Schedule is not valid ", _schedule)
-            )
+            else
+              return __("\"%s\" Schedule is not valid ", _schedule.reason)
           else
             return __("\"%s\" Schedule variable does not excist ", _params.schedulevar)
         else
