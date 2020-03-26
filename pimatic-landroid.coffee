@@ -326,17 +326,20 @@ module.exports = (env) ->
       switch @attributes[attr].type
         when "string"
           @attributeValues[attr] = _status
+          @emit attr, @attributeValues[attr]
           env.logger.debug "Set attribute '#{attr}' to '#{_status}'"
         when "number"
-          @attributeValues[attr] = Number _status
+          @attributeValues[attr] = (Number _status)
+          @emit attr, Number @attributeValues[attr]
           env.logger.debug "Set attribute '#{attr}' to #{_status}"
         when "boolean"
-          @attributeValues[attr] = Boolean _status
+          @attributeValues[attr] = (Boolean _status)
+          @emit attr, Boolean @attributeValues[attr]
           env.logger.debug "Set attribute '#{attr}' to #{_status}"
         else
           @attributeValues[attr] = _status
           env.logger.debug "Set attribute '#{attr}' to '#{_status}'"
-      @emit attr, @attributeValues[attr]
+          @emit attr, @attributeValues[attr]
 
 
     setSchedule: (schedule) =>
