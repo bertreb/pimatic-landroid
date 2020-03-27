@@ -14,3 +14,5 @@
 	* added display type attributes
 * 20200326, v0.1.12
 	* update on/off line status
+* 20200326, v0.1.13
+	* added nextMowe acronym

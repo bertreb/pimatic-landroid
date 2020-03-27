@@ -154,6 +154,7 @@ module.exports = (env) ->
         nextMowe:
           description: "Next scheduled mowing"
           type: "string"
+          acronym: "nextMowe"
       }
 
 
@@ -197,7 +198,7 @@ module.exports = (env) ->
       super()
 
     processMowerMessage: (data) =>
-      env.logger.debug "processMowerMessage data: " + JSON.stringify(data,null,2)
+      #env.logger.debug "processMowerMessage data: " + JSON.stringify(data,null,2)
       if data?
         if data.online?
           if data.online 
