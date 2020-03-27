@@ -40,7 +40,6 @@ The following variables (attributes) are available in the gui / pimatic.
 cloud:              "If plugin is connected or disconnected to the Worx-landroid cloud"
 status:             "Actual status of the mower (idle, mowing, etc)"
 mower:              "Mower offline or online"
-language:           "Used/configured language"
 rainDelay:          "Delay after rain, before mowing (minutes)"
 totalTime:          "TotalTime the mower has mowed (minutes)"
 totalDistance:      "TotalDistance the mower has mowed (meters)"
