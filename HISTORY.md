@@ -18,3 +18,5 @@
 	* added nextMowe acronym
 * 20200326, v0.1.14
 	* fix scheduler
+* 20200326, v0.1.15
+	* edit nextMowe
