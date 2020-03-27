@@ -12,3 +12,5 @@
 	* added next scheduled mowing
 * 20200326, v0.1.11
 	* added display type attributes
+* 20200326, v0.1.12
+	* update on/off line status

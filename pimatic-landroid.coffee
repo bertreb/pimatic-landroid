@@ -64,8 +64,6 @@ module.exports = (env) ->
 
   class LandroidMower extends env.devices.Device
 
-
-
     constructor: (@config, lastState, @framework, @plugin) ->
       @id = @config.id
       @name = @config.name
@@ -184,31 +182,30 @@ module.exports = (env) ->
         @setAttr("mower","offline")
 
       @plugin.landroidCloud.on "mqtt", (mower, data)=>
-        @processMowerMessage(mower, data)
+        @processMowerMessage(data)
 
       @plugin.landroidCloud.on "online",  (msg)=>
         env.logger.debug "online message received processing " + JSON.stringify(msg,null,2)
-        @processMowerMessage(null,msg)
+        @processMowerMessage(msg)
       @plugin.landroidCloud.on "offline",  (msg)=>
-        env.logger.debug "offline message received processing"
-        @processMowerMessage(null,msg)
+        env.logger.debug "offline message received processing"+ JSON.stringify(msg,null,2)
+        @processMowerMessage(msg)
 
       @plugin.landroidCloud.on "connect",  (data)=>
         @setAttr("cloud","connected")
 
       super()
 
-    processMowerMessage: (mower, data) =>
-      #env.logger.debug "processMowerMessage, mower: " + JSON.stringify(mower,null,2) + ", data: " + JSON.stringify(data,null,2)
-      if mower?
-        if mower.online?
-          if mower.online 
+    processMowerMessage: (data) =>
+      env.logger.debug "processMowerMessage data: " + JSON.stringify(data,null,2)
+      if data?
+        if data.online?
+          if data.online 
             @setAttr("mower", "online")
             @mowerOnline = true
           else
             @setAttr("mower","offline")
             @mowerOnline = false
-      if data?
         landroidDataset = new LandroidDataset(data)
         if landroidDataset.statusDescription?
           @setAttr("status",landroidDataset.statusDescription)
