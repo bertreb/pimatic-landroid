@@ -340,7 +340,7 @@ module.exports = (env) ->
         if schedule[checkDate][1] > 0
           if i is 0 # is today
             time = (String schedule[checkDate][0]).split(":")
-            if (Number time[0]) > Moment().hour() and (Number time[1]) > Moment().minute()
+            if (Number time[0]) >= Moment().hour() and (Number time[1]) > Moment().minute()
               _nextMowe = "today " + schedule[checkDate][0]
               if Boolean schedule[checkDate][2]
                 _nextMowe = _nextMowe + " " + "with edgeCut"
