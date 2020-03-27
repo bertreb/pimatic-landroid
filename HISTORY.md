@@ -16,3 +16,5 @@
 	* update on/off line status
 * 20200326, v0.1.13
 	* added nextMowe acronym
+* 20200326, v0.1.14
+	* fix scheduler

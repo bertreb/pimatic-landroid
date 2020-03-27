@@ -183,6 +183,7 @@ module.exports = (env) ->
         @setAttr("mower","offline")
 
       @plugin.landroidCloud.on "mqtt", (mower, data)=>
+        @processMowerMessage(mower)
         @processMowerMessage(data)
 
       @plugin.landroidCloud.on "online",  (msg)=>
@@ -244,9 +245,14 @@ module.exports = (env) ->
           error: true
           reason: "no reason"
         days = scheduleIn.split(";")
+        for day in days
+          env.logger.info "Day: " + day
         if days?
           for day,i in days
             dayParameters = day.split(",")
+            unless dayParameters.length is 4
+              result.reason = "Schedule, invalid format of '#{dayParameters}'"
+              return result
             dayOfWeek = dayParameters[0].trim()
             _day = @daysOfWeek[dayOfWeek]
             unless _day?
@@ -268,7 +274,7 @@ module.exports = (env) ->
               return result
             result.schedule[_day] = [time, (Number _duration), (Number _edgeCut)]
           result.error = false
-          return result
+        return result
       catch err
         result.reason = "Error in checkAndComplete schedule " + err
         return result
