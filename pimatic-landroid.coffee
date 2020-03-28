@@ -187,10 +187,10 @@ module.exports = (env) ->
         @processMowerMessage(data)
 
       @plugin.landroidCloud.on "online",  (msg)=>
-        env.logger.debug "online message received processing " + JSON.stringify(msg,null,2)
+        env.logger.debug "online message received processing" # + JSON.stringify(msg,null,2)
         @processMowerMessage(msg)
       @plugin.landroidCloud.on "offline",  (msg)=>
-        env.logger.debug "offline message received processing"+ JSON.stringify(msg,null,2)
+        env.logger.debug "offline message received processing" #+ JSON.stringify(msg,null,2)
         @processMowerMessage(msg)
 
       @plugin.landroidCloud.on "connect",  (data)=>

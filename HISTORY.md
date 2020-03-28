@@ -24,3 +24,5 @@
 	* check on double schedule day
 * 20200328, v0.1.17
 	* update uuid lib
+* 20200328, v0.1.18
+	* update logging info
