@@ -20,5 +20,7 @@
 	* fix scheduler
 * 20200326, v0.1.15
 	* edit nextMowe
-* 20200326, v0.1.16
+* 20200328, v0.1.16
 	* check on double schedule day
+* 20200328, v0.1.17
+	* update uuid lib

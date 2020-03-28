@@ -6,7 +6,8 @@ const EventEmitter = require('events');
 const rp = require('request-promise');
 const mqtt = require('mqtt');
 //const JSON = require('circular-json');
-const uuidv1 = require('uuid/v1');
+//const uuidv1 = require('uuid')(v1);
+const { v1: uuidv1 } = require('uuid');
 
 const ident = salt => {
     const tTC = text => text.split('').map(c => c.charCodeAt(0));
