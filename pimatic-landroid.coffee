@@ -47,7 +47,7 @@ module.exports = (env) ->
                 product_id: device.product_id
                 command_in: device.mqtt_topics.command_in
                 command_out: device.mqtt_topics.command_out
-              @framework.deviceManager.discoveredDevice( "pimatic-sounds", config.name, config)
+              @framework.deviceManager.discoveredDevice( "pimatic-landroid", config.name, config)
         )
         .catch((err)=>
           env.logger.debug "Error in discover getUserDevices " + err
@@ -241,12 +241,10 @@ module.exports = (env) ->
     checkAndCompleteSchedule: (scheduleIn) =>
       try
         result =
-          schedule: @emptySchedule
+          schedule: _.clone(@emptySchedule)
           error: true
           reason: "no reason"
         days = scheduleIn.split(";")
-        for day in days
-          env.logger.info "Day: " + day
         if days?
           for day,i in days
             dayParameters = day.split(",")
@@ -258,6 +256,9 @@ module.exports = (env) ->
             unless _day?
               result.reason = "Schedule, invalid day #{dayOfweek}"
               return result
+            if result.schedule[_day][1]>0 # check if duration > 0
+              result.reason = "Schedule for day '#{dayOfWeek}' already exists"
+              return result              
             time = dayParameters[1].trim()
             _time = time.split(":")
             if _time?
@@ -265,7 +266,7 @@ module.exports = (env) ->
                 result.reason = "Schedule, invalid time format '#{time}' for '#{dayOfWeek}'"
                 return result
             _duration = dayParameters[2].trim()
-            if Number _duration < 0 or Number _duration > 1439
+            if Number _duration < 1 or Number _duration > 1439
               result.reason = "Schedule, invalid duration value '#{dayParameters[2]}' for '#{dayOfWeek}'"
               return result
             _edgeCut = dayParameters[3].trim()
