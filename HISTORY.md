@@ -26,3 +26,5 @@
 	* update uuid lib
 * 20200328, v0.1.18
 	* update logging info
+* 20200404, v0.1.19
+	* reconnect timer to 1 hour
