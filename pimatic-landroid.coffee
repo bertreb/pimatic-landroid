@@ -333,7 +333,6 @@ module.exports = (env) ->
 
 
     setSchedule: (schedule) =>
-      #env.logger.info "Schedule: " + JSON.stringify(schedule,null,2)
       _nextMowe = "not scheduled"
       checkDate = Moment().day()
       for i in [0..7]
@@ -341,7 +340,7 @@ module.exports = (env) ->
         if schedule[checkDate][1] > 0
           if i is 0 # is today
             time = (String schedule[checkDate][0]).split(":")
-            if (Number time[0]) >= Moment().hour() and (Number time[1]) > Moment().minute()
+            if ((60*(Number time[0])+ Number time[1])) > ((60*Moment().hour()+Moment().minute()))
               _nextMowe = "today " + schedule[checkDate][0]
               if Boolean schedule[checkDate][2]
                 _nextMowe = _nextMowe + " " + "with edgeCut"
@@ -353,7 +352,7 @@ module.exports = (env) ->
               _nextMowe = _nextMowe + " " + "with edgeCut"
             @setAttr('nextMowe', _nextMowe)
             return
-        checkDate +=1
+        checkDate = checkDate + 1
       @setAttr('nextMowe', _nextMowe)
 
 

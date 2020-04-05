@@ -28,3 +28,5 @@
 	* update logging info
 * 20200404, v0.1.19
 	* reconnect timer to 1 hour
+* 20200405, v0.1.20
+	* schedule fix for today

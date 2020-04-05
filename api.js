@@ -181,7 +181,7 @@ class Worx extends EventEmitter {
                         }
                         else that.adapter.log.warn('Connection blocked from Worx, please try again in 24h');
 
-                        that.interval = setInterval(that._ckeckOnline.bind(that), 3600000);
+                        that.interval = setInterval(that._ckeckOnline.bind(that), 60000);
 
                     }).catch(err => {
                         that.adapter.log.error(err);
