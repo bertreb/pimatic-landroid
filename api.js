@@ -181,7 +181,7 @@ class Worx extends EventEmitter {
                         }
                         else that.adapter.log.warn('Connection blocked from Worx, please try again in 24h');
 
-                        that.interval = setInterval(that._ckeckOnline.bind(that), 60000);
+                        that.interval = setInterval(that._ckeckOnline.bind(that), 300000);
 
                     }).catch(err => {
                         that.adapter.log.error(err);
@@ -286,7 +286,7 @@ class Worx extends EventEmitter {
         _get2('GET', 'product-items', null, function (err, data) {
 
             if (err) {
-                that.adapter.log.error('Onlinecheck: couldnt get data ' + err);
+                that.adapter.log.debug('Onlinecheck: couldnt get data ' + err);
                 return;
             }  
 
