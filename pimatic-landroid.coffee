@@ -202,7 +202,8 @@ module.exports = (env) ->
       #env.logger.debug "processMowerMessage data: " + JSON.stringify(data,null,2)
       if data?
         if data.online?
-          if data.online 
+          if data.online
+            @setAttr("cloud","connected")
             @setAttr("mower", "online")
             @mowerOnline = true
           else

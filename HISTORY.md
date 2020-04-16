@@ -32,3 +32,5 @@
 	* schedule fix for today
 * 20200410, v0.1.21
 	* improve onlinecheck error handling
+* 20200415, v0.1.22
+	* improve cloud status handling
