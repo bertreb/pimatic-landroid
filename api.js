@@ -412,7 +412,7 @@ function _get2(method, path, dat, cb) {
 
     const options = {
         method: method,
-        uri: 'http://' + URL + PATH + path,
+        uri: 'https://' + URL + PATH + path,
         headers: headers,
         json: true
     };

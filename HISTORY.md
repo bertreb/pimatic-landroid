@@ -34,3 +34,5 @@
 	* improve onlinecheck error handling
 * 20200415, v0.1.22
 	* improve cloud status handling
+* 20210507, v0.1.23
+	* change api calls to https
